@@ -17,9 +17,11 @@ app.use(express.urlencoded({ extended: true }));
 
 // route imports
 import healthcheckRouter from "./routes/healthcheck.routes.js";
+import FAQRouter from "./routes/faq.routes.js";
 
 // route declaration
-app.use("/api/v2/healthcheck", healthcheckRouter);
+app.use("/api/v1/healthcheck", healthcheckRouter);
+app.use("/api/v1/faqs", FAQRouter);
 
 // catch-all route
 app.use((req, res, next) => {
