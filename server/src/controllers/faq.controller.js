@@ -35,6 +35,7 @@ const getFAQs = asyncHandler(async (req, res) => {
     await client.setEx(cacheKey, 3600, JSON.stringify(faqs));
     return res.status(200).json(new APIResponse(200, faqs, ""));
   } catch (error) {
+    console.log(error);
     throw new APIError(500);
   }
 });
@@ -65,6 +66,7 @@ const getOneFAQ = asyncHandler(async (req, res) => {
         )
       );
   } catch (error) {
+    console.log(error);
     throw new APIError(500);
   }
 });
@@ -83,7 +85,7 @@ const createFAQ = asyncHandler(async (req, res) => {
       .status(201)
       .json(new APIResponse(200, newFAQ, "FAQ successfully created"));
   } catch (error) {
-    console.log(err);
+    console.log(error);
     throw new APIError(500);
   }
 });

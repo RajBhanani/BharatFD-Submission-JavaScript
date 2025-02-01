@@ -32,10 +32,7 @@ faqSchema.pre("save", async function (next) {
     });
     const translations = await Promise.all(translationPromises);
     translations.forEach(({ lang, text }) => {
-      this.translations.set(lang, {
-        ...this.translations.get(lang),
-        question: text,
-      });
+      this.translations[lang].question = text;
     });
   }
 
@@ -46,10 +43,7 @@ faqSchema.pre("save", async function (next) {
     });
     const translations = await Promise.all(translationPromises);
     translations.forEach(({ lang, text }) => {
-      this.translations.set(lang, {
-        ...this.translations.get(lang),
-        answer: text,
-      });
+      this.translations[lang].answer = text;
     });
   }
 
