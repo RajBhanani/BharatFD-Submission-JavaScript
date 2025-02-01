@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 import translate from "google-translate-api-x";
 
+import { languages } from "../utils/languages.js ";
+
 const faqSchema = new mongoose.Schema(
   {
     question: {
@@ -23,14 +25,11 @@ const faqSchema = new mongoose.Schema(
 );
 
 faqSchema.pre("save", async function (next) {
-  const languages = ["hi", "gu", "mr", "bn"];
-
   if (this.isModified("question")) {
     const translationPromises = languages.map(async (lang) => {
       const response = await translate(this.question, { to: lang });
       return { lang, text: response.text };
     });
-
     const translations = await Promise.all(translationPromises);
     translations.forEach(({ lang, text }) => {
       this.translations.set(lang, {
@@ -45,7 +44,6 @@ faqSchema.pre("save", async function (next) {
       const response = await translate(this.answer, { to: lang });
       return { lang, text: response.text };
     });
-
     const translations = await Promise.all(translationPromises);
     translations.forEach(({ lang, text }) => {
       this.translations.set(lang, {
@@ -59,7 +57,6 @@ faqSchema.pre("save", async function (next) {
 });
 
 faqSchema.pre("findOneAndUpdate", async function (next) {
-  const languages = ["hi", "gu", "mr", "bn"];
   const update = this.getUpdate();
 
   if (update.question) {
@@ -67,7 +64,6 @@ faqSchema.pre("findOneAndUpdate", async function (next) {
       const response = await translate(update.question, { to: lang });
       return { lang, text: response.text };
     });
-
     const translations = await Promise.all(translationPromises);
     translations.forEach(({ lang, text }) => {
       update[`translations.${lang}.question`] = text;
@@ -79,7 +75,6 @@ faqSchema.pre("findOneAndUpdate", async function (next) {
       const response = await translate(update.answer, { to: lang });
       return { lang, text: response.text };
     });
-
     const translations = await Promise.all(translationPromises);
     translations.forEach(({ lang, text }) => {
       update[`translations.${lang}.answer`] = text;
