@@ -23,7 +23,7 @@ A MERN-based application to manage FAQs in multiple languages, translated by Goo
 - [**Node.js**](https://nodejs.org/en): Backend runtime environment.
 - [**Express.js**](https://expressjs.com/): Web framework for Node.js.
 - [**Mongoose**](https://mongoosejs.com/): MongoDB ORM for handling database operations.
-- [**jsdom**](https://www.npmjs.com/package/jsdom): To parse the strings into a DOM and travel through it. (Read point 1 of Notes for explanation.)
+- [**jsdom**](https://www.npmjs.com/package/jsdom): To parse the strings into a DOM and travel through it. **(Read point 1 of Notes for explanation.)**
 - [**Google Translate API X**](): A free and unlimited API for Google Translate.
 - [**Redis**](https://redis.io/): In-memory data store for caching.
 - [**Mocha**](https://mochajs.org/): Simple testing framework for Node.js.
@@ -45,7 +45,11 @@ Make sure you have following installed or setup:
 
 ```
 git clone https://github.com/RajBhanani/BharatFD-Submission-JavaScript
+```
+```
 cd BharatFD-Submission-JavaScript/server
+```
+```
 npm install
 ```
 
@@ -68,61 +72,73 @@ Here is a description of all them:
 
 ### 1. Fetch all FAQs
 
-`http://localhost:3000/api/v1/faqs`
-Method: GET
-Request Parameters: none
-Request Body: none
-Response Type: Array of Objects
+```
+http://localhost:3000/api/v1/faqs
+```
+- Method: GET
+- Request Parameters: none
+- Request Body: none
+- Response Type: Array of Objects
 
 ### 2. Fetch one FAQ by ID
 
-`http://localhost:3000/api/v1/faqs/:id`
-Method: GET
-Request Parameters: ID of the required FAQ
-Request Body: none
-Response Type: Object
+```
+http://localhost:3000/api/v1/faqs/:id
+```
+- Method: GET
+- Request Parameters: ID of the required FAQ
+- Request Body: none
+- Response Type: Object
 
 ### 3. Create an FAQ
 
-`http://localhost:3000/api/v1/faqs/create`
-Method: POST
-Request Parameters: none
-Request Body: Object containing a question key and an answer key
-Response Type: Newly created object, pre save (Read point 2 of Notes)
+```
+http://localhost:3000/api/v1/faqs/create
+```
+- Method: POST
+- Request Parameters: none
+- Request Body: Object containing a question key and an answer key
+- Response Type: Newly created object, pre save (Read point 2 of Notes)
 
 ### 4. Update an FAQ
 
-`http://localhost:3000/api/v1/faqs/update`
-Method: PUT
-Request Parameters: none
-Request Body: Object containing ID of the FAQ to be changed and a sub-Object containing the changes
-Response Type: Updated object, pre save (Read point 2 of Notes)
+```
+http://localhost:3000/api/v1/faqs/update
+```
+- Method: PUT
+- Request Parameters: none
+- Request Body: Object containing ID of the FAQ to be changed and a sub-Object containing the changes
+- Response Type: Updated object, pre save (Read point 2 of Notes)
 
 ### 5. Delete an FAQ
 
-`http://localhost:3000/api/v1/faqs/delete`
-Method: DELETE
-Request Parameters: none
-Request Body: Object containing to ID of the FAQ to be deleted
-Response Type: Confirmation message
+```
+http://localhost:3000/api/v1/faqs/delete
+```
+- Method: DELETE
+- Request Parameters: none
+- Request Body: Object containing to ID of the FAQ to be deleted
+- Response Type: Confirmation message
 
 ### 6. Fetch one or all FAQs in another language
 
 ```
 http://localhost:3000/api/v1/faqs?lang={languageCode}
+```
+```
 http://localhost:3000/api/v1/faqs/:id?lang={languageCode}
 ```
 
-Method: GET
-Request Parameters: Language code [hi (Hindi), gu (Gujarati), mr (Marathi), or bn (Bengali)] and if needed, ID
-Request Body: none
-Response Type: Array of Objects or one Object
+- Method: GET
+- Request Parameters: Language code ["hi" (Hindi), "gu" (Gujarati), "mr" (Marathi), or "bn" (Bengali)] and if needed, ID
+- Request Body: none
+- Response Type: Array of Objects or one Object
 
 ## Notes
 
 1. Directly translating the strings caused many of the HTML tags and attributes to be translated to, hence disrupting the WYSIWYG editor. To counter this, the strings need to be parsed into a JavaScript DOM and the tree needs to be walked through recursively until the last child is reached and go bottom-up, translating only the text content of each element and leaving the tags alone. In the end, the entire DOM tree is once again converted to a string, which is then saved into the database.
 2. Because of how mongoose works, the newly created object is returned before the middleware to translate and store the FAQs is ran, hence the actual time to commit the data to the database is a few miliseconds longer than the time to return the response from the create and update APIs. This is largely due to the fact that parsing and translating the FAQs is a slow process, dependent on third-party libraries like jsdom and google-translate-api-x.
-3. All the responses and errors from the APIs are standardised and will always have the same format. Refer their respective files in server/src/utils for a reference.
+3. All the responses and errors from the APIs are standardised and will always have the same format. Refer their respective files in `server/src/utils` for a reference.
 
 ## Contributing
 
@@ -135,4 +151,4 @@ Please do the following if you want to contribute:
 - Push to your branch (`git push origin feature/your-feature-name`).
 - Create a pull request.
 
-This README provides everything needed to understand, install, and use the project. Let me know if you need any modifications~
+This README provides everything needed to understand, install, and use the project. Let me know if you need any modifications!
