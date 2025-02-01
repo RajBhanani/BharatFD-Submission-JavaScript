@@ -31,7 +31,7 @@ const translateHTML = async (htmlContent, targetLang) => {
 
 async function ParseDOM(obj) {
   for (const lang of languages) {
-    obj.translations[lang].answer = await translateHTML(obj.answer, lang);
+    obj[`translations.${lang}.answer`] = await translateHTML(obj.answer, lang);
   }
 }
 

@@ -15,7 +15,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DOMPurify from "dompurify";
 import axios from "axios";
 import { ExpandMore } from "@mui/icons-material";
@@ -26,7 +26,7 @@ const GetFAQ = () => {
   const [find, setFind] = useState("all");
   const [ID, setID] = useState();
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -40,7 +40,6 @@ const GetFAQ = () => {
           ? `/api/v1/faqs?lang=${lang}`
           : `/api/v1/faqs/${ID}?lang=${lang}`;
       const res = await axios.get(url);
-      console.log(res.data.data);
       if (find === "one") setFaqs([res.data.data]);
       setFaqs(res.data.data);
     } catch (error) {
@@ -50,6 +49,23 @@ const GetFAQ = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    const getFAQs = async () => {
+      setLoading(true);
+      try {
+        const res = await axios.get("/api/v1/faqs");
+        setFaqs(res.data.data);
+      } catch (error) {
+        console.error(error);
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getFAQs();
+  }, []);
 
   return (
     <Box
@@ -146,7 +162,8 @@ const GetFAQ = () => {
                 <Typography>Question: {faq.question}</Typography>
               </AccordionSummary>
               <AccordionDetails>
-                Answer: <br />
+                <Typography fontSize={13}>ID: {faq.id}</Typography>
+                <Typography> Answer: </Typography>
                 <div
                   dangerouslySetInnerHTML={{
                     __html: DOMPurify.sanitize(faq.answer),

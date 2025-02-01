@@ -1,9 +1,5 @@
 # FAQ Management API
 
-### Ongoing work:
-
-- Creating a front-end for a more pleasant experience
-
 ## Overview
 
 A MERN-based application to manage FAQs in multiple languages, translated by Google Transplate API, and added support of WYSIWYG editor for rich-text formatting, and Redis for caching and quicker responses.
@@ -30,6 +26,18 @@ A MERN-based application to manage FAQs in multiple languages, translated by Goo
 - [**Chai**](https://www.chaijs.com/): An assertion library that pairs well with Mocha.
 - [**ESLint**](https://eslint.org/): Standard linting library for JavaScript and JSX.
 
+### Client Side:
+
+This project is built using the following technologies:
+
+- [**React**](https://react.dev/): A JavaScript library to building UIs.
+- [**Vite**](https://vitejs.dev/): A fast build tool and development server for modern web projects.
+- [**React Router**](https://reactrouter.com/): Declarative routing for React.
+- [**Axios**](https://axios-http.com/): A promise-based HTTP client to call APIs.
+- [**Material-UI (MUI)**](https://mui.com/): Popular React UI framework with many pre-made components.
+- [**React Quill**](https://www.npmjs.com/package/react-quill): A rich text editor for handling WYSIWYG formatted content.
+- [**DOMPurify**](https://www.npmjs.com/package/dompurify): A library to sanitise HTML and prevent XSS attacks.
+
 ## Prerequistes
 
 Make sure you have following installed or setup:
@@ -46,9 +54,11 @@ Make sure you have following installed or setup:
 ```
 git clone https://github.com/RajBhanani/BharatFD-Submission-JavaScript
 ```
+
 ```
 cd BharatFD-Submission-JavaScript/server
 ```
+
 ```
 npm install
 ```
@@ -65,6 +75,24 @@ Host is ac-gu86s0d-shard-(some gibberish).mongodb.net
 ⚙️  Server is running at port 3000
 ```
 
+5. Run this command to go to the client directory from the server.
+
+```
+cd ../client
+```
+
+6. Run these commands:
+
+```
+npm install
+```
+
+```
+npm start
+```
+
+7. Access the client application at [http://localhost:5173](http://localhost:5173)
+
 ## API Endpoints
 
 Once the server starts, you can hit endpoints to perform CRUD operations on the FAQs.
@@ -75,6 +103,7 @@ Here is a description of all them:
 ```
 http://localhost:3000/api/v1/faqs
 ```
+
 - Method: GET
 - Request Parameters: none
 - Request Body: none
@@ -85,6 +114,7 @@ http://localhost:3000/api/v1/faqs
 ```
 http://localhost:3000/api/v1/faqs/:id
 ```
+
 - Method: GET
 - Request Parameters: ID of the required FAQ
 - Request Body: none
@@ -95,6 +125,7 @@ http://localhost:3000/api/v1/faqs/:id
 ```
 http://localhost:3000/api/v1/faqs/create
 ```
+
 - Method: POST
 - Request Parameters: none
 - Request Body: Object containing a question key and an answer key
@@ -105,6 +136,7 @@ http://localhost:3000/api/v1/faqs/create
 ```
 http://localhost:3000/api/v1/faqs/update
 ```
+
 - Method: PUT
 - Request Parameters: none
 - Request Body: Object containing ID of the FAQ to be changed and a sub-Object containing the changes
@@ -113,11 +145,12 @@ http://localhost:3000/api/v1/faqs/update
 ### 5. Delete an FAQ
 
 ```
-http://localhost:3000/api/v1/faqs/delete
+http://localhost:3000/api/v1/faqs/delete/:id
 ```
+
 - Method: DELETE
-- Request Parameters: none
-- Request Body: Object containing to ID of the FAQ to be deleted
+- Request Parameters: ID of the FAQ to be deleted
+- Request Body: none
 - Response Type: Confirmation message
 
 ### 6. Fetch one or all FAQs in another language
@@ -125,6 +158,7 @@ http://localhost:3000/api/v1/faqs/delete
 ```
 http://localhost:3000/api/v1/faqs?lang={languageCode}
 ```
+
 ```
 http://localhost:3000/api/v1/faqs/:id?lang={languageCode}
 ```
@@ -144,6 +178,7 @@ http://localhost:3000/api/v1/faqs/:id?lang={languageCode}
 
 All contributions to help fix the above mentioned caveats or any other issues are welcomed!
 Please do the following if you want to contribute:
+
 - Fork the repository and clone it to your local machine.
 - Create a new branch (`git checkout -b feature/your-feature-name`).
 - Make your changes.

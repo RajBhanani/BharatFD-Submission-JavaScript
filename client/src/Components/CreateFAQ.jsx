@@ -5,8 +5,8 @@ import { Button, FormControl, TextField, Typography } from "@mui/material";
 import axios from "axios";
 
 const CreateFAQ = () => {
-  const [question, setQuestion] = useState();
-  const [answer, setAnswer] = useState();
+  const [question, setQuestion] = useState("");
+  const [answer, setAnswer] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,7 +15,7 @@ const CreateFAQ = () => {
         question,
         answer,
       });
-      if (response.data.statusCode === 200) {
+      if (response.data.statusCode === 201) {
         setQuestion("");
         setAnswer("");
       }
@@ -54,6 +54,7 @@ const CreateFAQ = () => {
         <TextField
           fullWidth
           label="Question"
+          value={question}
           onChange={(e) => {
             setQuestion(e.target.value);
           }}

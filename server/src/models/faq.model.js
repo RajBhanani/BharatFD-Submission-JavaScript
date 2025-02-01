@@ -3,6 +3,7 @@ import translate from "google-translate-api-x";
 
 import { languages } from "../utils/languages.js ";
 import { ParseDOM } from "../utils/parseDOM.js";
+import { client } from "../utils/redisClient.js";
 
 const faqSchema = new mongoose.Schema(
   {
@@ -40,7 +41,7 @@ faqSchema.pre("save", async function (next) {
   if (this.isModified("answer")) {
     await ParseDOM(this);
   }
-
+  client.flushAll();
   next();
 });
 
@@ -57,12 +58,12 @@ faqSchema.pre("findOneAndUpdate", async function (next) {
       update[`translations.${lang}.question`] = text;
     });
   }
-
   if (update.answer) {
-   await ParseDOM(update);
+    await ParseDOM(update);
   }
 
   this.setUpdate(update);
+  client.flushAll();
   next();
 });
 

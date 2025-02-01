@@ -76,14 +76,9 @@ const createFAQ = asyncHandler(async (req, res) => {
     const { question, answer } = req.body;
     const newFAQ = new FAQ({ question, answer });
     newFAQ.save();
-    client.del("faqs:en");
-    client.del("faqs:hi");
-    client.del("faqs:gu");
-    client.del("faqs:bn");
-    client.del("faqs:mr");
     return res
       .status(201)
-      .json(new APIResponse(200, newFAQ, "FAQ successfully created"));
+      .json(new APIResponse(201, newFAQ, "FAQ successfully created"));
   } catch (error) {
     console.log(error);
     throw new APIError(500);
@@ -96,11 +91,6 @@ const updateFAQ = asyncHandler(async (req, res) => {
     const response = await FAQ.findOneAndUpdate({ _id: id }, update, {
       new: true,
     });
-    client.del("faqs:en");
-    client.del("faqs:hi");
-    client.del("faqs:gu");
-    client.del("faqs:bn");
-    client.del("faqs:mr");
     return res
       .status(201)
       .json(new APIResponse(201, response, "Successfully updated"));
@@ -112,13 +102,10 @@ const updateFAQ = asyncHandler(async (req, res) => {
 
 const deleteFAQ = asyncHandler(async (req, res) => {
   try {
-    const { id } = req.body;
+    const { id } = req.params;
+    console.log(id)
     const response = await FAQ.deleteOne({ _id: id });
-    client.del("faqs:en");
-    client.del("faqs:hi");
-    client.del("faqs:gu");
-    client.del("faqs:bn");
-    client.del("faqs:mr");
+    client.flushAll();
     return res
       .status(200)
       .json(new APIResponse(200, response.ok, "Successfully deleted"));

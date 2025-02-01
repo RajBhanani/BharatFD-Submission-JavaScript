@@ -13,6 +13,6 @@ router.get("/", getFAQs);
 router.get("/:id", getOneFAQ);
 router.post("/create", createFAQ);
 router.put("/update", updateFAQ);
-router.delete("/delete", deleteFAQ);
+router.delete("/delete/:id", deleteFAQ);
 
 export default router;
