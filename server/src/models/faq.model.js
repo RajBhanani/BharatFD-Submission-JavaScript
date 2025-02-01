@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import translate from "google-translate-api-x";
 
 import { languages } from "../utils/languages.js ";
+import { ParseDOM } from "../utils/parseDOM.js";
 
 const faqSchema = new mongoose.Schema(
   {
@@ -37,14 +38,7 @@ faqSchema.pre("save", async function (next) {
   }
 
   if (this.isModified("answer")) {
-    const translationPromises = languages.map(async (lang) => {
-      const response = await translate(this.answer, { to: lang });
-      return { lang, text: response.text };
-    });
-    const translations = await Promise.all(translationPromises);
-    translations.forEach(({ lang, text }) => {
-      this.translations[lang].answer = text;
-    });
+    await ParseDOM(this);
   }
 
   next();
@@ -65,14 +59,7 @@ faqSchema.pre("findOneAndUpdate", async function (next) {
   }
 
   if (update.answer) {
-    const translationPromises = languages.map(async (lang) => {
-      const response = await translate(update.answer, { to: lang });
-      return { lang, text: response.text };
-    });
-    const translations = await Promise.all(translationPromises);
-    translations.forEach(({ lang, text }) => {
-      update[`translations.${lang}.answer`] = text;
-    });
+   await ParseDOM(update);
   }
 
   this.setUpdate(update);
